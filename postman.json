@@ -1,0 +1,361 @@
+{
+    "info": {
+      "name": "Trivia Platform API",
+      "description": "API collection for the Gamification Trivia Platform",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+      {
+        "key": "baseUrl",
+        "value": "http://localhost:8000/api"
+      },
+      {
+        "key": "token",
+        "value": ""
+      }
+    ],
+    "auth": {
+      "type": "bearer",
+      "bearer": [
+        {
+          "key": "token",
+          "value": "{{token}}",
+          "type": "string"
+        }
+      ]
+    },
+    "item": [
+      {
+        "name": "Authentication",
+        "item": [
+          {
+            "name": "Register",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"name\": \"Test User\",\n    \"email\": \"test@example.com\",\n    \"username\": \"testuser\",\n    \"password\": \"password123\",\n    \"password_confirmation\": \"password123\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/register",
+                "host": ["{{baseUrl}}"],
+                "path": ["register"]
+              }
+            }
+          },
+          {
+            "name": "Login",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "var jsonData = pm.response.json();",
+                    "pm.environment.set(\"token\", jsonData.token);"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ],
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/login",
+                "host": ["{{baseUrl}}"],
+                "path": ["login"]
+              }
+            }
+          },
+          {
+            "name": "Logout",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json"
+                }
+              ],
+              "url": {
+                "raw": "{{baseUrl}}/logout",
+                "host": ["{{baseUrl}}"],
+                "path": ["logout"]
+              }
+            }
+          },
+          {
+            "name": "Profile",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json"
+                }
+              ],
+              "url": {
+                "raw": "{{baseUrl}}/profile",
+                "host": ["{{baseUrl}}"],
+                "path": ["profile"]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Games",
+        "item": [
+          {
+            "name": "List Games",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{baseUrl}}/games",
+                "host": ["{{baseUrl}}"],
+                "path": ["games"]
+              }
+            }
+          },
+          {
+            "name": "Create Game",
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"title\": \"Science Quiz\",\n    \"description\": \"Test your science knowledge\",\n    \"questions\": [\n        {\n            \"question\": \"What is the chemical symbol for gold?\",\n            \"option_a\": \"Ag\",\n            \"option_b\": \"Au\",\n            \"option_c\": \"Fe\",\n            \"option_d\": \"Cu\",\n            \"correct_answer\": \"B\"\n        },\n        {\n            \"question\": \"What planet is known as the Red Planet?\",\n            \"option_a\": \"Venus\",\n            \"option_b\": \"Jupiter\",\n            \"option_c\": \"Mars\",\n            \"option_d\": \"Saturn\",\n            \"correct_answer\": \"C\"\n        },\n        {\n            \"question\": \"What is the hardest natural substance?\",\n            \"option_a\": \"Gold\",\n            \"option_b\": \"Iron\",\n            \"option_c\": \"Diamond\",\n            \"option_d\": \"Platinum\",\n            \"correct_answer\": \"C\"\n        },\n        {\n            \"question\": \"Who developed the theory of relativity?\",\n            \"option_a\": \"Isaac Newton\",\n            \"option_b\": \"Albert Einstein\",\n            \"option_c\": \"Galileo Galilei\",\n            \"option_d\": \"Stephen Hawking\",\n            \"correct_answer\": \"B\"\n        },\n        {\n            \"question\": \"What is the powerhouse of the cell?\",\n            \"option_a\": \"Nucleus\",\n            \"option_b\": \"Mitochondria\",\n            \"option_c\": \"Ribosome\",\n            \"option_d\": \"Golgi apparatus\",\n            \"correct_answer\": \"B\"\n        }\n    ]\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/games",
+                "host": ["{{baseUrl}}"],
+                "path": ["games"]
+              }
+            }
+          },
+          {
+            "name": "Get Game",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{baseUrl}}/games/1",
+                "host": ["{{baseUrl}}"],
+                "path": ["games", "1"]
+              }
+            }
+          },
+          {
+            "name": "My Games",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{baseUrl}}/my-games",
+                "host": ["{{baseUrl}}"],
+                "path": ["my-games"]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Invitations",
+        "item": [
+          {
+            "name": "Send Invitation",
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"game_id\": 1,\n    \"receiver_identifier\": \"jane@example.com\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/invitations",
+                "host": ["{{baseUrl}}"],
+                "path": ["invitations"]
+              }
+            }
+          },
+          {
+            "name": "My Invitations",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{baseUrl}}/invitations",
+                "host": ["{{baseUrl}}"],
+                "path": ["invitations"]
+              }
+            }
+          },
+          {
+            "name": "Respond to Invitation",
+            "request": {
+              "method": "PUT",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"status\": \"accepted\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/invitations/1/respond",
+                "host": ["{{baseUrl}}"],
+                "path": ["invitations", "1", "respond"]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Game Play",
+        "item": [
+          {
+            "name": "Play Game",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{baseUrl}}/play/1",
+                "host": ["{{baseUrl}}"],
+                "path": ["play", "1"]
+              }
+            }
+          },
+          {
+            "name": "Submit Answers",
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"answers\": [\"B\", \"C\", \"C\", \"B\", \"B\"]\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/play/1/submit",
+                "host": ["{{baseUrl}}"],
+                "path": ["play", "1", "submit"]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Leaderboard",
+        "item": [
+          {
+            "name": "Global Leaderboard",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{baseUrl}}/leaderboard",
+                "host": ["{{baseUrl}}"],
+                "path": ["leaderboard"]
+              }
+            }
+          },
+          {
+            "name": "Game Leaderboard",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{baseUrl}}/leaderboard/game/1",
+                "host": ["{{baseUrl}}"],
+                "path": ["leaderboard", "game", "1"]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Notifications",
+        "item": [
+          {
+            "name": "Get Notifications",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{baseUrl}}/notifications",
+                "host": ["{{baseUrl}}"],
+                "path": ["notifications"]
+              }
+            }
+          },
+          {
+            "name": "Mark Notification as Read",
+            "request": {
+              "method": "PUT",
+              "header": [],
+              "url": {
+                "raw": "{{baseUrl}}/notifications/1/read",
+                "host": ["{{baseUrl}}"],
+                "path": ["notifications", "1", "read"]
+              }
+            }
+          },
+          {
+            "name": "Mark All as Read",
+            "request": {
+              "method": "PUT",
+              "header": [],
+              "url": {
+                "raw": "{{baseUrl}}/notifications/read-all",
+                "host": ["{{baseUrl}}"],
+                "path": ["notifications", "read-all"]
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
