@@ -6,11 +6,19 @@ import 'package:frontend/screens/auth/login_screen.dart';
 import 'package:frontend/screens/auth/register_screen.dart';
 import 'package:frontend/screens/home/home_screen.dart';
 import 'package:frontend/services/storage_service.dart';
+import 'package:frontend/services/api_service.dart';
+import 'package:frontend/services/http_client.dart';
+import 'package:frontend/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize services
   await StorageService.init();
+  await ApiService.init();
+  await AuthenticatedHttpClient.init();
+  
   runApp(const MyApp());
 }
 
@@ -27,11 +35,15 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Trivia Platform',
+        debugShowCheckedModeBanner: false,
+        navigatorKey: navigatorKey, // Add the navigator key from http_client.dart
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+          useMaterial3: true,
         ),
-        home: const AuthWrapper(),
+        home:  SplashScreen(), // Start with splash screen instead of AuthWrapper
         routes: {
           '/login': (context) => const LoginScreen(),
           '/register': (context) => const RegisterScreen(),
@@ -42,6 +54,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// Keep the AuthWrapper for any usage elsewhere in your app
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
 

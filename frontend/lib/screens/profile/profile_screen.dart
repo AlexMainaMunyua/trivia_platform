@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/profile/gameHistoryScreen.dart';
+import 'package:frontend/screens/profile/leaderboard_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 
@@ -70,6 +72,9 @@ class ProfileScreen extends StatelessWidget {
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
                       // TODO: Implement game history
+                       Navigator.of(context).push(
+                MaterialPageRoute(builder: (ctx) => const GameHistoryScreen()),
+              );
                     },
                   ),
                 ),
@@ -80,6 +85,12 @@ class ProfileScreen extends StatelessWidget {
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
                       // TODO: Implement leaderboard
+                       Navigator.of(context).push(
+                MaterialPageRoute(builder: (ctx) => const LeaderboardScreen()),
+              );
+                      
+             
+            
                     },
                   ),
                 ),
